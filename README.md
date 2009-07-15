@@ -94,7 +94,7 @@ Credits
 =======
 
 Ajax.JSONRequest is based on a gist originally posted by
-Tobie Langel at http://gist.github.com/145466
+Tobie Langel at <http://gist.github.com/145466>
 
 The version you see here is basically an enhancement on top of that,
 with most all of the core structure originating from there.

@@ -93,7 +93,7 @@ new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
 Credits
 =======
 
-Ajax.JSONRequest is based on a gist originally posted by
+`Ajax.JSONRequest` is based on a gist originally posted by
 Tobie Langel at <http://gist.github.com/145466>
 
 The version you see here is basically an enhancement on top of that,

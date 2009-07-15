@@ -15,21 +15,21 @@ Your options are:
 
 <pre>
 new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
-	callbackParamName: "jsoncallback",
-	parameters: {
-	  tags: 'cat',
-	  tagmode: 'any',
-	  format: 'json'
-	},
-	onCreate: function(instance) {
-	  console.log("create", this);
-	},
-	onSuccess: function(instance) {
-	  console.log("complete", this);
-	},
-	onFailure: function(instance) {
-	  console.log("fail", this);
-	}
+  callbackParamName: "jsoncallback",
+  parameters: {
+    tags: 'cat',
+    tagmode: 'any',
+    format: 'json'
+  },
+  onCreate: function(instance) {
+    console.log("create", this);
+  },
+  onSuccess: function(instance) {
+    console.log("complete", this);
+  },
+  onFailure: function(instance) {
+    console.log("fail", this);
+  }
 });
 </pre>
 
@@ -45,21 +45,21 @@ the onFailure callback is invoke.
 
 <pre>
 new Ajax.JSONRequest('http://api.flickr.com/services/feeds/asdfasdfasdfasdfasdfsdf', {
-	callbackParamName: "jsoncallback",
-	parameters: {
-	  tags: 'cat',
-	  tagmode: 'any',
-	  format: 'json'
-	},
-	onCreate: function(instance) {
-	  console.log("create", this);
-	},
-	onSuccess: function(instance) {
-	  console.log("complete", this);
-	},
-	onFailure: function(instance) {
-	  console.log("fail", this);
-	}
+  callbackParamName: "jsoncallback",
+  parameters: {
+    tags: 'cat',
+    tagmode: 'any',
+    format: 'json'
+  },
+  onCreate: function(instance) {
+    console.log("create", this);
+  },
+  onSuccess: function(instance) {
+    console.log("complete", this);
+  },
+  onFailure: function(instance) {
+    console.log("fail", this);
+  }
 });
 </pre>
 
@@ -71,7 +71,7 @@ You can set your own timeout period. This example sets this timeout to
 
 <pre>
 new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
-	timeout: 100,
+  timeout: 100,
   callbackParamName: "jsoncallback",
   parameters: {
     tags: 'cat',

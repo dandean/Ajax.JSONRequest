@@ -6,12 +6,12 @@ The Basics
 
 Your options are:
 
-* onCreate: When the request is built but before it is invoked
-* onSuccess: When the request is completed
-* onFailure: When the request times out and fails
-* callbackParamName: The name of the callback query parameter to use (defaults to "callback")
-* parameters: Parameters to pass to the request
-* timeout: The milliseconds before canceling the request and invoking onFailure
+* `onCreate`: When the request is built but before it is invoked
+* `onSuccess`: When the request is completed
+* `onFailure`: When the request times out and fails
+* `callbackParamName`: The name of the callback query parameter to use (defaults to "callback")
+* `parameters`: Parameters to pass to the request
+* `timeout`: The milliseconds before canceling the request and invoking onFailure
 
 <pre>
 new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
@@ -40,8 +40,8 @@ Since there is no way to inspect what happens after we make a request with the j
 technique, we're stuck having to make informed guesses about what's going on.
 
 This example makes a request to an invalid URL. Since the callback is not invoked
-within the default *timeout* period (10 seconds) the request is "cancelled" and
-the onFailure callback is invoke.
+within the default `timeout` period (10 seconds) the request is "cancelled" and
+the `onFailure` callback is invoked if specified.
 
 <pre>
 new Ajax.JSONRequest('http://api.flickr.com/services/feeds/asdfasdfasdfasdfasdfsdf', {
@@ -66,7 +66,7 @@ new Ajax.JSONRequest('http://api.flickr.com/services/feeds/asdfasdfasdfasdfasdfs
 Using a custom timeout period
 -----------------------------
 
-You can set your own timeout period. This example sets this timeout to
+You can set your own `timeout` period. This example sets this timeout to
 100 milliseconds which is pretty much guaranteed to fail. 
 
 <pre>

@@ -13,22 +13,22 @@ Your options are:
 * `parameters`: Parameters to pass to the request
 * `timeout`: The milliseconds before canceling the request and invoking onFailure
 
+You access the resulting JSON data within your handlers via the `responseJSON` property.
+
 <pre>
 new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
   callbackParamName: "jsoncallback",
   parameters: {
-    tags: 'cat',
-    tagmode: 'any',
-    format: 'json'
+    tags: 'cat', tagmode: 'any', format: 'json'
   },
-  onCreate: function(instance) {
-    console.log("create", this);
+  onCreate: function(request) {
+    console.log("create", request, request.responseJSON);
   },
-  onSuccess: function(instance) {
-    console.log("complete", this);
+  onSuccess: function(request) {
+    console.log("success", request, request.responseJSON);
   },
-  onFailure: function(instance) {
-    console.log("fail", this);
+  onFailure: function(request) {
+    console.log("fail", request, request.responseJSON);
   }
 });
 </pre>
@@ -47,18 +47,16 @@ the `onFailure` callback is invoked if specified.
 new Ajax.JSONRequest('http://api.flickr.com/services/feeds/asdfasdfasdfasdfasdfsdf', {
   callbackParamName: "jsoncallback",
   parameters: {
-    tags: 'cat',
-    tagmode: 'any',
-    format: 'json'
+    tags: 'cat', tagmode: 'any', format: 'json'
   },
-  onCreate: function(instance) {
-    console.log("create", this);
+  onCreate: function(request) {
+    console.log("create", request, request.responseJSON);
   },
-  onSuccess: function(instance) {
-    console.log("complete", this);
+  onSuccess: function(request) {
+    console.log("success", request, request.responseJSON);
   },
-  onFailure: function(instance) {
-    console.log("fail", this);
+  onFailure: function(request) {
+    console.log("fail", request, request.responseJSON);
   }
 });
 </pre>
@@ -71,21 +69,23 @@ You can set your own `timeout` period. This example sets this timeout to
 
 <pre>
 new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
+
+  // Short timeout illustrates failure mechanism. This will "fail" because we don't
+  // get a response in time.
   timeout: 100,
+
   callbackParamName: "jsoncallback",
   parameters: {
-    tags: 'cat',
-    tagmode: 'any',
-    format: 'json'
+    tags: 'cat', tagmode: 'any', format: 'json'
   },
-  onCreate: function(instance) {
-    console.log("create", this);
+  onCreate: function(request) {
+    console.log("create", request, request.responseJSON);
   },
-  onSuccess: function(instance) {
-    console.log("complete", this);
+  onSuccess: function(request) {
+    console.log("success", request, request.responseJSON);
   },
-  onFailure: function(instance) {
-    console.log("fail", this);
+  onFailure: function(request) {
+    console.log("fail", request, request.responseJSON);
   }
 });
 </pre>

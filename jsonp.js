@@ -31,7 +31,6 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
     
     /**
      *  Ajax.JSONRequest#_cleanup() -> "undefined"
-     *  
      *  Cleans up after the request
      **/
     _cleanup: function() {
@@ -47,7 +46,6 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
   
     /**
      *  Ajax.JSONRequest#request() -> "undefined"
-     *  
      *  Invokes the JSON-P request lifecycle
      **/
     request: function() {
@@ -84,6 +82,7 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
           this.options.onFailure.call(this, this);
         }
       }.bind(this), this.options.timeout);
-    }
+    },
+    toString: function() { return "[object Ajax.JSONRequest]"; }
   };
 })());

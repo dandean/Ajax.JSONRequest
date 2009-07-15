@@ -1,3 +1,6 @@
+Ajax.JSONRequest is JSONP for Prototype.js
+==========================================
+
 Examples
 ========
 

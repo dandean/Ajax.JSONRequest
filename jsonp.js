@@ -12,7 +12,7 @@
  * Note: while I still think JSON-P is an inherantly flawed technique,
  * there are some valid use cases which this can provide for.
  *
- * See examples below for usage.
+ * See examples in README for usage
  */
 Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
   var id = 0, head = document.getElementsByTagName('head')[0];
@@ -63,9 +63,9 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
       window[name] = function(json) {
         this._cleanup(); // Garbage collection
         window[name] = undefined;
-        if (Object.isFunction(this.options.onComplete)) {
+        if (Object.isFunction(this.options.onSuccess)) {
           this.responseJSON = json;
-          this.options.onComplete.call(this, this);
+          this.options.onSuccess.call(this, this);
         }
       }.bind(this);
       

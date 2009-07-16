@@ -9,6 +9,7 @@ Your options are:
 * `onCreate`: When the request is built but before it is invoked
 * `onSuccess`: When the request is completed
 * `onFailure`: When the request times out and fails
+* `onComplete`: When the request is completed, regardless of success or failure
 * `callbackParamName`: The name of the callback query parameter to use (defaults to "callback")
 * `parameters`: Parameters to pass to the request
 * `timeout`: The seconds before canceling the request and invoking onFailure
@@ -22,13 +23,16 @@ new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
     tags: 'cat', tagmode: 'any', format: 'json'
   },
   onCreate: function(request) {
-    console.log("create", request, request.responseJSON);
+    console.log("1: create", request, request.responseJSON);
   },
   onSuccess: function(request) {
-    console.log("success", request, request.responseJSON);
+    console.log("1: success", request, request.responseJSON);
   },
   onFailure: function(request) {
-    console.log("fail", request, request.responseJSON);
+    console.log("1: fail", request, request.responseJSON);
+  },
+  onComplete: function(request) {
+    console.log("1: complete", request, request.responseJSON);
   }
 });
 </pre>
@@ -50,13 +54,16 @@ new Ajax.JSONRequest('http://api.flickr.com/services/feeds/asdfasdfasdfasdfasdfs
     tags: 'cat', tagmode: 'any', format: 'json'
   },
   onCreate: function(request) {
-    console.log("create", request, request.responseJSON);
+    console.log("2: create", request, request.responseJSON);
   },
   onSuccess: function(request) {
-    console.log("success", request, request.responseJSON);
+    console.log("2: success", request, request.responseJSON);
   },
   onFailure: function(request) {
-    console.log("fail", request, request.responseJSON);
+    console.log("2: fail", request, request.responseJSON);
+  },
+  onComplete: function(request) {
+    console.log("2: complete", request, request.responseJSON);
   }
 });
 </pre>
@@ -79,13 +86,16 @@ new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
     tags: 'cat', tagmode: 'any', format: 'json'
   },
   onCreate: function(request) {
-    console.log("create", request, request.responseJSON);
+    console.log("3: create", request, request.responseJSON);
   },
   onSuccess: function(request) {
-    console.log("success", request, request.responseJSON);
+    console.log("3: success", request, request.responseJSON);
   },
   onFailure: function(request) {
-    console.log("fail", request, request.responseJSON);
+    console.log("3: fail", request, request.responseJSON);
+  },
+  onComplete: function(request) {
+    console.log("3: complete", request, request.responseJSON);
   }
 });
 </pre>

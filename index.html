@@ -1,72 +1,81 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>JSONP</title>
-	<script src="lib/prototype.js" type="text/javascript" charset="utf-8"></script>
-	<script src="src/jsonp.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" charset="utf-8">
-		document.observe("dom:loaded", function(e) {
-		  // Should succeed
-		  new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
-		    callbackParamName: "jsoncallback",
-		    parameters: {
-		      tags: 'cat', tagmode: 'any', format: 'json'
-		    },
-		    onCreate: function(request) {
-		      console.log("create", request, request.responseJSON);
-		    },
-		    onSuccess: function(request) {
-		      console.log("success", request, request.responseJSON);
-		    },
-		    onFailure: function(request) {
-		      console.log("fail", request, request.responseJSON);
-		    }
-		  });
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>JSONP</title>
+  <script src="lib/prototype.js" type="text/javascript" charset="utf-8"></script>
+  <script src="src/jsonp.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" charset="utf-8">
+    document.observe("dom:loaded", function(e) {
+      // Should succeed
+      new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
+        callbackParamName: "jsoncallback",
+        parameters: {
+          tags: 'cat', tagmode: 'any', format: 'json'
+        },
+        onCreate: function(request) {
+          console.log("1: create", request, request.responseJSON);
+        },
+        onSuccess: function(request) {
+          console.log("1: success", request, request.responseJSON);
+        },
+        onFailure: function(request) {
+          console.log("1: fail", request, request.responseJSON);
+        },
+        onComplete: function(request) {
+          console.log("1: complete", request, request.responseJSON);
+        }
+      });
 
-		  // Invalid URL never calls onSuccess. Times out in 10 seconds causing onFailure.
-		  new Ajax.JSONRequest('http://api.flickr.com/services/feeds/asdfasdfasdfasdfasdfsdf', {
-		    callbackParamName: "jsoncallback",
-		    parameters: {
-		      tags: 'cat', tagmode: 'any', format: 'json'
-		    },
-		    onCreate: function(request) {
-		      console.log("create", request, request.responseJSON);
-		    },
-		    onSuccess: function(request) {
-		      console.log("success", request, request.responseJSON);
-		    },
-		    onFailure: function(request) {
-		      console.log("fail", request, request.responseJSON);
-		    }
-		  });
+      // Invalid URL never calls onSuccess. Times out in 10 seconds causing onFailure.
+      new Ajax.JSONRequest('http://api.flickr.com/services/feeds/asdfasdfasdfasdfasdfsdf', {
+        callbackParamName: "jsoncallback",
+        parameters: {
+          tags: 'cat', tagmode: 'any', format: 'json'
+        },
+        onCreate: function(request) {
+          console.log("2: create", request, request.responseJSON);
+        },
+        onSuccess: function(request) {
+          console.log("2: success", request, request.responseJSON);
+        },
+        onFailure: function(request) {
+          console.log("2: fail", request, request.responseJSON);
+        },
+        onComplete: function(request) {
+          console.log("2: complete", request, request.responseJSON);
+        }
+      });
 
-		  // Timeout is super short, should fail
-		  new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
+      // Timeout is super short, should fail
+      new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
 
-		    // Short timeout illustrates failure mechanism. This will "fail" because we don't
-		    // get a response in time.
-		    timeout: 0.1,
+        // Short timeout illustrates failure mechanism. This will "fail" because we don't
+        // get a response in time.
+        timeout: 0.1,
 
-		    callbackParamName: "jsoncallback",
-		    parameters: {
-		      tags: 'cat', tagmode: 'any', format: 'json'
-		    },
-		    onCreate: function(request) {
-		      console.log("create", request, request.responseJSON);
-		    },
-		    onSuccess: function(request) {
-		      console.log("success", request, request.responseJSON);
-		    },
-		    onFailure: function(request) {
-		      console.log("fail", request, request.responseJSON);
-		    }
-		  });
-		});
-	</script>
+        callbackParamName: "jsoncallback",
+        parameters: {
+          tags: 'cat', tagmode: 'any', format: 'json'
+        },
+        onCreate: function(request) {
+          console.log("3: create", request, request.responseJSON);
+        },
+        onSuccess: function(request) {
+          console.log("3: success", request, request.responseJSON);
+        },
+        onFailure: function(request) {
+          console.log("3: fail", request, request.responseJSON);
+        },
+        onComplete: function(request) {
+          console.log("3: complete", request, request.responseJSON);
+        }
+      });
+    });
+  </script>
 </head>
 <body>
-	<h1>Ajax.JSONResponse</h1>
+  <h1>Ajax.JSONResponse</h1>
 </body>
 </html>

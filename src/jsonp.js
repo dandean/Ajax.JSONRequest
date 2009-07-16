@@ -49,9 +49,15 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
      *  Invokes the JSON-P request lifecycle
      **/
     request: function() {
+      
       // Define local vars
       var key = this.options.callbackParamName,
-        name = '_prototypeJSONPCallback_' + (id++);
+        name = '_prototypeJSONPCallback_' + (id++),
+        complete = function() {
+          if (Object.isFunction(this.options.onComplete)) {
+            this.options.onComplete.call(this, this);
+          }
+        }.bind(this);
       
       // Add callback as a parameter and build request URL
       this.options.parameters[key] = name;
@@ -65,6 +71,7 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
           this.responseJSON = json;
           this.options.onSuccess.call(this, this);
         }
+        complete();
       }.bind(this);
       
       this.script = new Element('script', { type: 'text/javascript', src: url });
@@ -81,6 +88,7 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
         if (Object.isFunction(this.options.onFailure)) {
           this.options.onFailure.call(this, this);
         }
+        complete();
       }.bind(this), this.options.timeout * 1000);
     },
     toString: function() { return "[object Ajax.JSONRequest]"; }

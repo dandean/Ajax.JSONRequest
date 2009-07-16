@@ -11,7 +11,7 @@ Your options are:
 * `onFailure`: When the request times out and fails
 * `callbackParamName`: The name of the callback query parameter to use (defaults to "callback")
 * `parameters`: Parameters to pass to the request
-* `timeout`: The milliseconds before canceling the request and invoking onFailure
+* `timeout`: The seconds before canceling the request and invoking onFailure
 
 You access the resulting JSON data within your handlers via the `responseJSON` property.
 
@@ -65,14 +65,14 @@ Using a custom timeout period
 -----------------------------
 
 You can set your own `timeout` period. This example sets this timeout to
-100 milliseconds which is pretty much guaranteed to fail. 
+0.1 seconds which is pretty much guaranteed to fail. 
 
 <pre>
 new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
 
   // Short timeout illustrates failure mechanism. This will "fail" because we don't
   // get a response in time.
-  timeout: 100,
+  timeout: 0.1,
 
   callbackParamName: "jsoncallback",
   parameters: {

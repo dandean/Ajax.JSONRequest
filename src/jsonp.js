@@ -21,7 +21,7 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
       $super(options);
       this.options.url = url;
       this.options.callbackParamName = this.options.callbackParamName || 'callback';
-      this.options.timeout = this.options.timeout || 10000; // Default timeout: 10 seconds
+      this.options.timeout = this.options.timeout || 10; // Default timeout: 10 seconds
       this.options.invokeImmediately = (!Object.isUndefined(this.options.invokeImmediately)) ? this.options.invokeImmediately : true ;
       this.responseJSON = {};
       if (this.options.invokeImmediately) {
@@ -81,7 +81,7 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
         if (Object.isFunction(this.options.onFailure)) {
           this.options.onFailure.call(this, this);
         }
-      }.bind(this), this.options.timeout);
+      }.bind(this), this.options.timeout * 1000);
     },
     toString: function() { return "[object Ajax.JSONRequest]"; }
   };

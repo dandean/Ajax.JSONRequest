@@ -4,7 +4,7 @@
  * Might as well just call this an iteration.
  * 
  * This version introduces:
- * - onCreate and onFailure callback options.
+ * - onCreate and onFailure callback options and a full response object.
  * - option to not invoke request upon instantiation.
  *
  * Tested in Firefox 3/3.5, Safari 4

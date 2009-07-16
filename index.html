@@ -3,79 +3,107 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title>JSONP</title>
+  <title>JSONP for Prototype.js: Ajax.JSONRequest</title>
   <script src="lib/prototype.js" type="text/javascript" charset="utf-8"></script>
   <script src="src/jsonp.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
     document.observe("dom:loaded", function(e) {
-      // Should succeed
-      new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
-        callbackParamName: "jsoncallback",
-        parameters: {
-          tags: 'cat', tagmode: 'any', format: 'json'
-        },
-        onCreate: function(response) {
-          console.log("1: create", response, response.responseJSON);
-        },
-        onSuccess: function(response) {
-          console.log("1: success", response, response.responseJSON);
-        },
-        onFailure: function(response) {
-          console.log("1: fail", response, response.responseJSON);
-        },
-        onComplete: function(response) {
-          console.log("1: complete", response, response.responseJSON);
-        }
-      });
+      if (console) {
+        console.info("One request should succeed and two should fail within ten seconds...");
+        setTimeout("console.info('Demo complete.')", 11000);
+        // Should succeed
+        new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
+          callbackParamName: "jsoncallback",
+          parameters: {
+            tags: 'cat', tagmode: 'any', format: 'json'
+          },
+          onCreate: function(response) {
+            console.log("1: create", response, response.responseJSON);
+          },
+          onSuccess: function(response) {
+            console.log("1: success", response, response.responseJSON);
+          },
+          onFailure: function(response) {
+            console.log("1: fail", response, response.responseJSON);
+          },
+          onComplete: function(response) {
+            console.log("1: complete", response, response.responseJSON);
+          }
+        });
 
-      // Invalid URL never calls onSuccess. Times out in 10 seconds causing onFailure.
-      new Ajax.JSONRequest('http://api.flickr.com/services/feeds/asdfasdfasdfasdfasdfsdf', {
-        callbackParamName: "jsoncallback",
-        parameters: {
-          tags: 'cat', tagmode: 'any', format: 'json'
-        },
-        onCreate: function(response) {
-          console.log("2: create", response, response.responseJSON);
-        },
-        onSuccess: function(response) {
-          console.log("2: success", response, response.responseJSON);
-        },
-        onFailure: function(response) {
-          console.log("2: fail", response, response.responseJSON);
-        },
-        onComplete: function(response) {
-          console.log("2: complete", response, response.responseJSON);
-        }
-      });
+        // Invalid URL never calls onSuccess. Times out in 10 seconds causing onFailure.
+        new Ajax.JSONRequest('http://api.flickr.com/services/feeds/asdfasdfasdfasdfasdfsdf', {
+          callbackParamName: "jsoncallback",
+          parameters: {
+            tags: 'cat', tagmode: 'any', format: 'json'
+          },
+          onCreate: function(response) {
+            console.log("2: create", response, response.responseJSON);
+          },
+          onSuccess: function(response) {
+            console.log("2: success", response, response.responseJSON);
+          },
+          onFailure: function(response) {
+            console.log("2: fail", response, response.responseJSON);
+          },
+          onComplete: function(response) {
+            console.log("2: complete", response, response.responseJSON);
+          }
+        });
 
-      // Timeout is super short, should fail
-      new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
+        // Timeout is super short, should fail
+        new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
 
-        // Short timeout illustrates failure mechanism. This will "fail" because we don't
-        // get a response in time.
-        timeout: 0.1,
+          // Short timeout illustrates failure mechanism. This will "fail" because we don't
+          // get a response in time.
+          timeout: 0.1,
 
-        callbackParamName: "jsoncallback",
-        parameters: {
-          tags: 'cat', tagmode: 'any', format: 'json'
-        },
-        onCreate: function(response) {
-          console.log("3: create", response, response.responseJSON);
-        },
-        onSuccess: function(response) {
-          console.log("3: success", response, response.responseJSON);
-        },
-        onFailure: function(response) {
-          console.log("3: fail", response, response.responseJSON);
-        },
-        onComplete: function(response) {
-          console.log("3: complete", response, response.responseJSON);
-        }
-      });
+          callbackParamName: "jsoncallback",
+          parameters: {
+            tags: 'cat', tagmode: 'any', format: 'json'
+          },
+          onCreate: function(response) {
+            console.log("3: create", response, response.responseJSON);
+          },
+          onSuccess: function(response) {
+            console.log("3: success", response, response.responseJSON);
+          },
+          onFailure: function(response) {
+            console.log("3: fail", response, response.responseJSON);
+          },
+          onComplete: function(response) {
+            console.log("3: complete", response, response.responseJSON);
+          }
+        });
+      }
     });
   </script>
+  <style type="text/css" rel="stylesheet">
+    body {
+      font-size: 12px;
+      font-family: Helvetica, Arial, sans-serif;
+    }
+      code {
+        font-size: 12px;
+        background: yellow;
+        padding: 2px 4px;
+      }
+  </style>
 </head>
 <body>
-  <h1>Ajax.JSONResponse</h1>
+  <h1>Ajax.JSONRequest (JSONP for Prototype.js)</h1>
+  <p>This page demostrates <code>Ajax.JSONRequest</code> and <code>Ajax.JSONResponse</code>,
+    a <a href="http://bob.pythonmac.org/archives/2005/12/05/remote-json-jsonp/" title="Remote JSON - JSONP" target="_blank">JSONP</a>
+    implementation for <a href="http://prototypejs.org/" title="Prototype JavaScript framework: Easy Ajax and DOM manipulation for dynamic web applications" target="_blank">Prototype.js</a>.
+    Open up your JavaScript console and reload the page to see it work.</p>
+  
+  <p>There is a ticket logged in the <a href="https://prototype.lighthouseapp.com/projects/8886/tickets/333-cross-domain-ajax-using-jsonp">Prototype.js bug tracker (Lighthouse)</a> requesting this feature.
+    If you also want this feature added to core, head over there and say so.</p>
+  
+  <br />
+  <br />
+  <br />
+  - <a href="http://www.dandean.com/">Dan Dean</a>
+  <p>Log bugs and request features on <a href="http://github.com/dandean/Ajax.JSONRequest/tree/master" title="Dan Dean's Ajax.JSONRequest on Github">Github</a>.</p>
 </body>
 </html>

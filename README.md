@@ -17,8 +17,8 @@ Your options are:
 Handling response content:
 
 The first (and only) argument passed to your response handlers is a `Ajax.JSONResponse` object.
-Access the resulting JSON data via that objects `responseJSON` property or get at the raw JSON
-string with that objects `responseText` property.
+Access the resulting JSON data via that object's `responseJSON` property or get at the raw JSON
+string with that object's `responseText` property.
 
 <pre>
 new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {

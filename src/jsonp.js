@@ -23,7 +23,6 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
       this.options.callbackParamName = this.options.callbackParamName || 'callback';
       this.options.timeout = this.options.timeout || 10; // Default timeout: 10 seconds
       this.options.invokeImmediately = (!Object.isUndefined(this.options.invokeImmediately)) ? this.options.invokeImmediately : true ;
-      this.responseJSON = {};
       if (this.options.invokeImmediately) {
         this.request();
       }
@@ -38,9 +37,8 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
         clearTimeout(this.timeout);
         this.timeout = null;
       }
-      if (this.script && Object.isElement(this.script)) {
-        this.script.remove();
-        this.script = null;
+      if (this.transport && Object.isElement(this.transport)) {
+        this.transport.remove();
       }
     },
   
@@ -51,11 +49,12 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
     request: function() {
       
       // Define local vars
+      var response = new Ajax.JSONResponse(this);
       var key = this.options.callbackParamName,
         name = '_prototypeJSONPCallback_' + (id++),
         complete = function() {
           if (Object.isFunction(this.options.onComplete)) {
-            this.options.onComplete.call(this, this);
+            this.options.onComplete.call(this, response);
           }
         }.bind(this);
       
@@ -68,25 +67,29 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
         this._cleanup(); // Garbage collection
         window[name] = undefined;
         if (Object.isFunction(this.options.onSuccess)) {
-          this.responseJSON = json;
-          this.options.onSuccess.call(this, this);
+          response.status = 200;
+          response.statusText = "OK";
+          response.setResponseContent(json);
+          this.options.onSuccess.call(this, response);
         }
         complete();
       }.bind(this);
       
-      this.script = new Element('script', { type: 'text/javascript', src: url });
+      this.transport = new Element('script', { type: 'text/javascript', src: url });
       
       if (Object.isFunction(this.options.onCreate)) {
-        this.options.onCreate.call(this, this);
+        this.options.onCreate.call(this, response);
       }
       
-      head.appendChild(this.script);
+      head.appendChild(this.transport);
 
       this.timeout = setTimeout(function() {
         this._cleanup();
         window[name] = Prototype.emptyFunction;
         if (Object.isFunction(this.options.onFailure)) {
-          this.options.onFailure.call(this, this);
+          response.status = 504;
+          response.statusText = "Gateway Timeout";
+          this.options.onFailure.call(this, response);
         }
         complete();
       }.bind(this), this.options.timeout * 1000);
@@ -94,3 +97,22 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
     toString: function() { return "[object Ajax.JSONRequest]"; }
   };
 })());
+
+Ajax.JSONResponse = Class.create({
+  initialize: function(request) {
+    this.request = request;
+  },
+  request: undefined,
+  status: 0,
+  statusText: '',
+  responseJSON: undefined,
+  responseText: undefined,
+  setResponseContent: function(json) {
+    this.responseJSON = json;
+    this.responseText = Object.toJSON(json);
+  },
+  getTransport: function() {
+    if (this.request) return this.request.transport;
+  },
+  toString: function() { return "[object Ajax.JSONResponse]"; }
+});

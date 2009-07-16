@@ -14,7 +14,11 @@ Your options are:
 * `parameters`: Parameters to pass to the request
 * `timeout`: The seconds before canceling the request and invoking onFailure
 
-You access the resulting JSON data within your handlers via the `responseJSON` property.
+Handling response content:
+
+The first (and only) argument passed to your response handlers is a `Ajax.JSONResponse` object.
+Access the resulting JSON data via that objects `responseJSON` property or get at the raw JSON
+string with that objects `responseText` property.
 
 <pre>
 new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
@@ -22,17 +26,17 @@ new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
   parameters: {
     tags: 'cat', tagmode: 'any', format: 'json'
   },
-  onCreate: function(request) {
-    console.log("1: create", request, request.responseJSON);
+  onCreate: function(response) {
+    console.log("1: create", response, response.responseJSON);
   },
-  onSuccess: function(request) {
-    console.log("1: success", request, request.responseJSON);
+  onSuccess: function(response) {
+    console.log("1: success", response, response.responseJSON);
   },
-  onFailure: function(request) {
-    console.log("1: fail", request, request.responseJSON);
+  onFailure: function(response) {
+    console.log("1: fail", response, response.responseJSON);
   },
-  onComplete: function(request) {
-    console.log("1: complete", request, request.responseJSON);
+  onComplete: function(response) {
+    console.log("1: complete", response, response.responseJSON);
   }
 });
 </pre>
@@ -40,12 +44,13 @@ new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
 Handling Failures
 -----------------
 
-Since there is no way to inspect what happens after we make a request with the jsonp
+Since there is no way to inspect what happens after we make a request with the JSONP
 technique, we're stuck having to make informed guesses about what's going on.
 
 This example makes a request to an invalid URL. Since the callback is not invoked
 within the default `timeout` period (10 seconds) the request is "cancelled" and
-the `onFailure` callback is invoked if specified.
+the `onFailure` callback is invoked if specified. The `Ajax.JSONResponse` will have
+the `status` of 504 and `statusText` of "Gateway Timeout".
 
 <pre>
 new Ajax.JSONRequest('http://api.flickr.com/services/feeds/asdfasdfasdfasdfasdfsdf', {
@@ -53,17 +58,17 @@ new Ajax.JSONRequest('http://api.flickr.com/services/feeds/asdfasdfasdfasdfasdfs
   parameters: {
     tags: 'cat', tagmode: 'any', format: 'json'
   },
-  onCreate: function(request) {
-    console.log("2: create", request, request.responseJSON);
+  onCreate: function(response) {
+    console.log("2: create", response, response.responseJSON);
   },
-  onSuccess: function(request) {
-    console.log("2: success", request, request.responseJSON);
+  onSuccess: function(response) {
+    console.log("2: success", response, response.responseJSON);
   },
-  onFailure: function(request) {
-    console.log("2: fail", request, request.responseJSON);
+  onFailure: function(response) {
+    console.log("2: fail", response, response.responseJSON);
   },
-  onComplete: function(request) {
-    console.log("2: complete", request, request.responseJSON);
+  onComplete: function(response) {
+    console.log("2: complete", response, response.responseJSON);
   }
 });
 </pre>
@@ -85,17 +90,17 @@ new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
   parameters: {
     tags: 'cat', tagmode: 'any', format: 'json'
   },
-  onCreate: function(request) {
-    console.log("3: create", request, request.responseJSON);
+  onCreate: function(response) {
+    console.log("3: create", response, response.responseJSON);
   },
-  onSuccess: function(request) {
-    console.log("3: success", request, request.responseJSON);
+  onSuccess: function(response) {
+    console.log("3: success", response, response.responseJSON);
   },
-  onFailure: function(request) {
-    console.log("3: fail", request, request.responseJSON);
+  onFailure: function(response) {
+    console.log("3: fail", response, response.responseJSON);
   },
-  onComplete: function(request) {
-    console.log("3: complete", request, request.responseJSON);
+  onComplete: function(response) {
+    console.log("3: complete", response, response.responseJSON);
   }
 });
 </pre>

@@ -14,17 +14,17 @@
         parameters: {
           tags: 'cat', tagmode: 'any', format: 'json'
         },
-        onCreate: function(request) {
-          console.log("1: create", request, request.responseJSON);
+        onCreate: function(response) {
+          console.log("1: create", response, response.responseJSON);
         },
-        onSuccess: function(request) {
-          console.log("1: success", request, request.responseJSON);
+        onSuccess: function(response) {
+          console.log("1: success", response, response.responseJSON);
         },
-        onFailure: function(request) {
-          console.log("1: fail", request, request.responseJSON);
+        onFailure: function(response) {
+          console.log("1: fail", response, response.responseJSON);
         },
-        onComplete: function(request) {
-          console.log("1: complete", request, request.responseJSON);
+        onComplete: function(response) {
+          console.log("1: complete", response, response.responseJSON);
         }
       });
 
@@ -34,17 +34,17 @@
         parameters: {
           tags: 'cat', tagmode: 'any', format: 'json'
         },
-        onCreate: function(request) {
-          console.log("2: create", request, request.responseJSON);
+        onCreate: function(response) {
+          console.log("2: create", response, response.responseJSON);
         },
-        onSuccess: function(request) {
-          console.log("2: success", request, request.responseJSON);
+        onSuccess: function(response) {
+          console.log("2: success", response, response.responseJSON);
         },
-        onFailure: function(request) {
-          console.log("2: fail", request, request.responseJSON);
+        onFailure: function(response) {
+          console.log("2: fail", response, response.responseJSON);
         },
-        onComplete: function(request) {
-          console.log("2: complete", request, request.responseJSON);
+        onComplete: function(response) {
+          console.log("2: complete", response, response.responseJSON);
         }
       });
 
@@ -59,17 +59,17 @@
         parameters: {
           tags: 'cat', tagmode: 'any', format: 'json'
         },
-        onCreate: function(request) {
-          console.log("3: create", request, request.responseJSON);
+        onCreate: function(response) {
+          console.log("3: create", response, response.responseJSON);
         },
-        onSuccess: function(request) {
-          console.log("3: success", request, request.responseJSON);
+        onSuccess: function(response) {
+          console.log("3: success", response, response.responseJSON);
         },
-        onFailure: function(request) {
-          console.log("3: fail", request, request.responseJSON);
+        onFailure: function(response) {
+          console.log("3: fail", response, response.responseJSON);
         },
-        onComplete: function(request) {
-          console.log("3: complete", request, request.responseJSON);
+        onComplete: function(response) {
+          console.log("3: complete", response, response.responseJSON);
         }
       });
     });

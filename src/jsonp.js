@@ -23,6 +23,9 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
       this.options.callbackParamName = this.options.callbackParamName || 'callback';
       this.options.timeout = this.options.timeout || 10; // Default timeout: 10 seconds
       this.options.invokeImmediately = (!Object.isUndefined(this.options.invokeImmediately)) ? this.options.invokeImmediately : true ;
+      
+      Ajax.Responders.dispatch('onCreate', this);
+      
       if (this.options.invokeImmediately) {
         this.request();
       }
@@ -39,6 +42,7 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
       }
       if (this.transport && Object.isElement(this.transport)) {
         this.transport.remove();
+        this.transport = null;
       }
     },
   
@@ -66,13 +70,19 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
       window[name] = function(json) {
         this._cleanup(); // Garbage collection
         window[name] = undefined;
+
+        response.status = 200;
+        response.statusText = "OK";
+        response.setResponseContent(json);
+
         if (Object.isFunction(this.options.onSuccess)) {
-          response.status = 200;
-          response.statusText = "OK";
-          response.setResponseContent(json);
           this.options.onSuccess.call(this, response);
         }
+
+        Ajax.Responders.dispatch('onSuccess', this, response);
         complete();
+        Ajax.Responders.dispatch('onComplete', this, response);
+
       }.bind(this);
       
       this.transport = new Element('script', { type: 'text/javascript', src: url });

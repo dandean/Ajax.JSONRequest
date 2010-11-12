@@ -8,29 +8,43 @@
   <script src="src/jsonp.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
     document.observe("dom:loaded", function(e) {
-      if (console) {
-        console.info("One request should succeed and two should fail within ten seconds...");
-        setTimeout("console.info('Demo complete.')", 11000);
-        // Should succeed
+      
+      console.info("One request should succeed and two should fail within ten seconds...");
+
+      var created = 0,
+          successful = 0,
+          failed = 0,
+          completed = 0;
+      
+      test1();
+      
+      function test1() {
         new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
           callbackParamName: "jsoncallback",
           parameters: {
             tags: 'cat', tagmode: 'any', format: 'json'
           },
           onCreate: function(response) {
-            console.log("1: create", response, response.responseJSON);
+            created++;
+            console.log("jsonp request 1: created", response, response.responseJSON);
           },
           onSuccess: function(response) {
-            console.log("1: success", response, response.responseJSON);
+            successful++;
+            console.log("jsonp request 1: successful", response, response.responseJSON);
           },
           onFailure: function(response) {
-            console.log("1: fail", response, response.responseJSON);
+            failed++;
+            console.log("jsonp request 1: failed", response, response.responseJSON);
           },
           onComplete: function(response) {
-            console.log("1: complete", response, response.responseJSON);
+            completed++;
+            console.log("jsonp request 1: completed", response, response.responseJSON);
+            test2();
           }
         });
+      }
 
+      function test2() {
         // Invalid URL never calls onSuccess. Times out in 10 seconds causing onFailure.
         new Ajax.JSONRequest('http://api.flickr.com/services/feeds/asdfasdfasdfasdfasdfsdf', {
           callbackParamName: "jsoncallback",
@@ -38,19 +52,27 @@
             tags: 'cat', tagmode: 'any', format: 'json'
           },
           onCreate: function(response) {
-            console.log("2: create", response, response.responseJSON);
+            created++;
+            console.log("jsonp request 2: created", response, response.responseJSON);
+            console.log("this request has an invalid URL, so will fail in 10 seconds.");
           },
           onSuccess: function(response) {
-            console.log("2: success", response, response.responseJSON);
+            successful++;
+            console.log("jsonp request 2: successful", response, response.responseJSON);
           },
           onFailure: function(response) {
-            console.log("2: fail", response, response.responseJSON);
+            failed++;
+            console.log("jsonp request 2: failed", response, response.responseJSON);
           },
           onComplete: function(response) {
-            console.log("2: complete", response, response.responseJSON);
+            completed++;
+            console.log("jsonp request 2: completed", response, response.responseJSON);
+            test3();
           }
         });
+      }
 
+      function test3() {
         // Timeout is super short, should fail
         new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
 
@@ -63,18 +85,32 @@
             tags: 'cat', tagmode: 'any', format: 'json'
           },
           onCreate: function(response) {
-            console.log("3: create", response, response.responseJSON);
+            created++;
+            console.log("jsonp request 3: created", response, response.responseJSON);
+            console.log("this request has a VALID URL, but will fail since the timeout is shorter than it takes to get the response.");
           },
           onSuccess: function(response) {
-            console.log("3: success", response, response.responseJSON);
+            successful++;
+            console.log("jsonp request 3: successful", response, response.responseJSON);
           },
           onFailure: function(response) {
-            console.log("3: fail", response, response.responseJSON);
+            failed++;
+            console.log("jsonp request 3: failed", response, response.responseJSON);
           },
           onComplete: function(response) {
-            console.log("3: complete", response, response.responseJSON);
+            completed++;
+            console.log("jsonp request 3: completed", response, response.responseJSON);
+            results();
           }
         });
+      }
+      
+      function results() {
+        console.assert(created === 3, "3 requests should have been created.");
+        console.assert(successful === 1, "1 request should have been successful.");
+        console.assert(failed === 2, "2 requests should have been failures.");
+        console.assert(completed === 3, "3 requests should have been completed.");
+        console.info('Demo complete.');
       }
     });
   </script>

@@ -24,8 +24,6 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
       this.options.timeout = this.options.timeout || 10; // Default timeout: 10 seconds
       this.options.invokeImmediately = (!Object.isUndefined(this.options.invokeImmediately)) ? this.options.invokeImmediately : true ;
       
-      Ajax.Responders.dispatch('onCreate', this);
-      
       if (this.options.invokeImmediately) {
         this.request();
       }
@@ -60,6 +58,7 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
           if (Object.isFunction(this.options.onComplete)) {
             this.options.onComplete.call(this, response);
           }
+          Ajax.Responders.dispatch('onComplete', this, response);
         }.bind(this);
       
       // Add callback as a parameter and build request URL
@@ -78,10 +77,9 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
         if (Object.isFunction(this.options.onSuccess)) {
           this.options.onSuccess.call(this, response);
         }
-
         Ajax.Responders.dispatch('onSuccess', this, response);
+
         complete();
-        Ajax.Responders.dispatch('onComplete', this, response);
 
       }.bind(this);
       
@@ -90,6 +88,7 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
       if (Object.isFunction(this.options.onCreate)) {
         this.options.onCreate.call(this, response);
       }
+      Ajax.Responders.dispatch('onCreate', this);
       
       head.appendChild(this.transport);
 

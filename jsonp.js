@@ -14,7 +14,7 @@
  *
  * See examples in README for usage
  *
- * VERSION 1.0
+ * VERSION 1.1
  */
 Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
   var id = 0, head = document.getElementsByTagName('head')[0];

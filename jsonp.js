@@ -26,6 +26,10 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
       this.options.timeout = this.options.timeout || 10; // Default timeout: 10 seconds
       this.options.invokeImmediately = (!Object.isUndefined(this.options.invokeImmediately)) ? this.options.invokeImmediately : true ;
       
+      if (!Object.isUndefined(this.options.parameters) && Object.isString(this.options.parameters)) {
+        this.options.parameters = this.options.parameters.toQueryParams();
+      }
+      
       if (this.options.invokeImmediately) {
         this.request();
       }

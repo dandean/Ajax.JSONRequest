@@ -1,130 +1,25 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>JSONP for Prototype.js: Ajax.JSONRequest</title>
-  <script src="lib/prototype.js" type="text/javascript" charset="utf-8"></script>
-  <script src="src/jsonp.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="main.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <script src="./1.7/prototype.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
-    document.observe("dom:loaded", function(e) {
+    document.observe("dom:loaded", function() {
+      window.testVersions = ["1.6.1rc3","1.6.1","1.7"];
+
+      window.testNextVersion = function() {
+        if (testVersions.length) {
+          var next = testVersions.shift();
+          console.log(next);
+          document.body.appendChild(new Element("iframe", {src: next + "/index.html"}));
+        }
+      };
       
-      console.info("One request should succeed and two should fail within ten seconds...");
-
-      var created = 0,
-          successful = 0,
-          failed = 0,
-          completed = 0;
-      
-      test1();
-      
-      function test1() {
-        new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
-          callbackParamName: "jsoncallback",
-          parameters: {
-            tags: 'cat', tagmode: 'any', format: 'json'
-          },
-          onCreate: function(response) {
-            created++;
-            console.log("jsonp request 1: created", response, response.responseJSON);
-          },
-          onSuccess: function(response) {
-            successful++;
-            console.log("jsonp request 1: successful", response, response.responseJSON);
-          },
-          onFailure: function(response) {
-            failed++;
-            console.log("jsonp request 1: failed", response, response.responseJSON);
-          },
-          onComplete: function(response) {
-            completed++;
-            console.log("jsonp request 1: completed", response, response.responseJSON);
-            test2();
-          }
-        });
-      }
-
-      function test2() {
-        // Invalid URL never calls onSuccess. Times out in 10 seconds causing onFailure.
-        new Ajax.JSONRequest('http://api.flickr.com/services/feeds/asdfasdfasdfasdfasdfsdf', {
-          callbackParamName: "jsoncallback",
-          parameters: {
-            tags: 'cat', tagmode: 'any', format: 'json'
-          },
-          onCreate: function(response) {
-            created++;
-            console.log("jsonp request 2: created", response, response.responseJSON);
-            console.log("this request has an invalid URL, so will fail in 10 seconds.");
-          },
-          onSuccess: function(response) {
-            successful++;
-            console.log("jsonp request 2: successful", response, response.responseJSON);
-          },
-          onFailure: function(response) {
-            failed++;
-            console.log("jsonp request 2: failed", response, response.responseJSON);
-          },
-          onComplete: function(response) {
-            completed++;
-            console.log("jsonp request 2: completed", response, response.responseJSON);
-            test3();
-          }
-        });
-      }
-
-      function test3() {
-        // Timeout is super short, should fail
-        new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
-
-          // Short timeout illustrates failure mechanism. This will "fail" because we don't
-          // get a response in time.
-          timeout: 0.1,
-
-          callbackParamName: "jsoncallback",
-          parameters: {
-            tags: 'cat', tagmode: 'any', format: 'json'
-          },
-          onCreate: function(response) {
-            created++;
-            console.log("jsonp request 3: created", response, response.responseJSON);
-            console.log("this request has a VALID URL, but will fail since the timeout is shorter than it takes to get the response.");
-          },
-          onSuccess: function(response) {
-            successful++;
-            console.log("jsonp request 3: successful", response, response.responseJSON);
-          },
-          onFailure: function(response) {
-            failed++;
-            console.log("jsonp request 3: failed", response, response.responseJSON);
-          },
-          onComplete: function(response) {
-            completed++;
-            console.log("jsonp request 3: completed", response, response.responseJSON);
-            results();
-          }
-        });
-      }
-      
-      function results() {
-        console.assert(created === 3, "3 requests should have been created.");
-        console.assert(successful === 1, "1 request should have been successful.");
-        console.assert(failed === 2, "2 requests should have been failures.");
-        console.assert(completed === 3, "3 requests should have been completed.");
-        console.info('Demo complete.');
-      }
+      testNextVersion();
     });
   </script>
-  <style type="text/css" rel="stylesheet">
-    body {
-      font-size: 12px;
-      font-family: Helvetica, Arial, sans-serif;
-    }
-      code {
-        font-size: 12px;
-        background: yellow;
-        padding: 2px 4px;
-      }
-  </style>
 </head>
 <body>
   <h1>Ajax.JSONRequest (JSONP for Prototype.js)</h1>
@@ -136,10 +31,11 @@
   <p>There is a ticket logged in the <a href="https://prototype.lighthouseapp.com/projects/8886/tickets/333-cross-domain-ajax-using-jsonp">Prototype.js bug tracker (Lighthouse)</a> requesting this feature.
     If you also want this feature added to core, head over there and say so.</p>
   
-  <br />
-  <br />
-  <br />
+  <br>
+  <br>
+  <br>
   - <a href="http://www.dandean.com/">Dan Dean</a>
   <p>Log bugs and request features on <a href="http://github.com/dandean/Ajax.JSONRequest/tree/master" title="Dan Dean's Ajax.JSONRequest on Github">Github</a>.</p>
+  
 </body>
 </html>

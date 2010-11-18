@@ -15,6 +15,10 @@
  * See examples in README for usage
  *
  * VERSION 1.1
+ *
+ * new Ajax.JSONRequest(url, options);
+ * - url (String): JSON-P endpoint url.
+ * - options (Object): Configuration options for the request.
  */
 Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
   var id = 0, head = document.getElementsByTagName('head')[0];
@@ -36,7 +40,7 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
     },
     
     /**
-     *  Ajax.JSONRequest#_cleanup() -> "undefined"
+     *  Ajax.JSONRequest#_cleanup() -> undefined
      *  Cleans up after the request
      **/
     _cleanup: function() {
@@ -51,7 +55,7 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
     },
   
     /**
-     *  Ajax.JSONRequest#request() -> "undefined"
+     *  Ajax.JSONRequest#request() -> undefined
      *  Invokes the JSON-P request lifecycle
      **/
     request: function() {

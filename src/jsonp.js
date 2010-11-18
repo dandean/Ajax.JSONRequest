@@ -13,6 +13,8 @@
  * there are some valid use cases which this can provide for.
  *
  * See examples in README for usage
+ *
+ * VERSION 1.0
  */
 Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
   var id = 0, head = document.getElementsByTagName('head')[0];

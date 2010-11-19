@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>JSONP for Prototype.js: Ajax.JSONRequest</title>
+  <link rel="stylesheet" href="main.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <script src="./1.7/prototype.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" charset="utf-8">
+    document.observe("dom:loaded", function() {
+      window.testVersions = ["1.6.1","1.7"];
+
+      window.testNextVersion = function() {
+        if (testVersions.length) {
+          var next = testVersions.shift();
+          console.log(next);
+          document.body.appendChild(new Element("iframe", {src: next + "/index.html"}));
+        }
+      };
+      
+      testNextVersion();
+    });
+  </script>
+</head>
+<body>
+  <h1>Ajax.JSONRequest (JSONP for Prototype.js)</h1>
+  <p>This page demostrates <code>Ajax.JSONRequest</code> and <code>Ajax.JSONResponse</code>,
+    a <a href="http://bob.pythonmac.org/archives/2005/12/05/remote-json-jsonp/" title="Remote JSON - JSONP" target="_blank">JSONP</a>
+    implementation for <a href="http://prototypejs.org/" title="Prototype JavaScript framework: Easy Ajax and DOM manipulation for dynamic web applications" target="_blank">Prototype.js</a>.
+    Open up your JavaScript console and reload the page to see it work.</p>
+  
+  <p>There is a ticket logged in the <a href="https://prototype.lighthouseapp.com/projects/8886/tickets/333-cross-domain-ajax-using-jsonp">Prototype.js bug tracker (Lighthouse)</a> requesting this feature.
+    If you also want this feature added to core, head over there and say so.</p>
+  
+  <br>
+  <br>
+  <br>
+  - <a href="http://www.dandean.com/">Dan Dean</a>
+  <p>Log bugs and request features on <a href="http://github.com/dandean/Ajax.JSONRequest/tree/master" title="Dan Dean's Ajax.JSONRequest on Github">Github</a>.</p>
+  
+</body>
+</html>

@@ -6,17 +6,18 @@
  * This version introduces:
  * - Partial integration with Ajax.Responders (Thanks to @sr3d for the kick in this direction)
  * - Compatibility with Prototype 1.7 (Thanks to @soung3 for the bug report)
+ * - Will not break if page lacks a <head> element
  *
  * See examples in README for usage
  *
- * VERSION 1.1
+ * VERSION 1.1.1
  *
  * new Ajax.JSONRequest(url, options);
  * - url (String): JSON-P endpoint url.
  * - options (Object): Configuration options for the request.
  */
 Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
-  var id = 0, head = document.getElementsByTagName('head')[0];
+  var id = 0, head = document.getElementsByTagName('head')[0] || document.body;
   return {
     initialize: function($super, url, options) {
       $super(options);

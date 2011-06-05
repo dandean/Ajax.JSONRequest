@@ -4,13 +4,14 @@
  * Might as well just call this an iteration.
  * 
  * This version introduces:
+ * - Support for predefined callbacks (Necessary for OAuth signed requests, by @rboyce)
  * - Partial integration with Ajax.Responders (Thanks to @sr3d for the kick in this direction)
  * - Compatibility with Prototype 1.7 (Thanks to @soung3 for the bug report)
  * - Will not break if page lacks a <head> element
  *
  * See examples in README for usage
  *
- * VERSION 1.1.1
+ * VERSION 1.1.2
  *
  * new Ajax.JSONRequest(url, options);
  * - url (String): JSON-P endpoint url.
@@ -67,7 +68,16 @@ Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
           Ajax.Responders.dispatch('onComplete', this, response);
         }.bind(this);
       
-      // Add callback as a parameter and build request URL
+      // If the callback parameter is already defined, use that
+      if (this.options.parameters[key] !== undefined) {
+        name = this.options.parameters[key];
+      }
+      // Otherwise, add callback as a parameter
+      else {
+        this.options.parameters[key] = name;
+      }
+      
+      // Build request URL
       this.options.parameters[key] = name;
       var url = this.options.url + ((this.options.url.include('?') ? '&' : '?') + Object.toQueryString(this.options.parameters));
       

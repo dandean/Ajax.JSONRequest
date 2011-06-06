@@ -105,6 +105,19 @@ new Ajax.JSONRequest('http://api.flickr.com/services/feeds/photos_public.gne', {
 });
 </pre>
 
+Making signed requests
+----------------------
+
+To make a signed request (such as an OAuth request), it is generally necessary to 
+fix the callback parameter before generating the request signature. To support this, 
+if the property corresponding to `callbackParamName` is defined in the `parameters` 
+object, that callback will be used instead of an automatically generated one.
+
+When providing your own callback parameter, keep the asynchronous aspect of these 
+requests in mind. It is possible for two requests with the same callback parameter 
+to overwrite each other; therefore, it is recommended that you make these callback 
+parameters unique for any requests that may occur concurrently.
+
 Credits
 =======
 
